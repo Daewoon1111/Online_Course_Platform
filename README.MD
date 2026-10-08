@@ -1,4 +1,4 @@
-#Online Course Platform
+# Online Course Platform
 
 React + Bootstrap frontend (`frontend/`), Django REST API (`backend/`), AI features through OpenRouter.
 

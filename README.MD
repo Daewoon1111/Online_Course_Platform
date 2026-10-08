@@ -1,4 +1,4 @@
-# Economic Communication Center — Online Course Platform
+#Online Course Platform
 
 React + Bootstrap frontend (`frontend/`), Django REST API (`backend/`), AI features through OpenRouter.
 
@@ -22,17 +22,6 @@ frontend/
 archive/static-frontend/   Old static HTML version (kept for reference, safe to delete)
 package.json, scripts/py.mjs   One-command setup and dev run for the whole project
 ```
-
-Production: `npm run build` creates `frontend/dist`; Django then serves the whole site from one origin
-(`python manage.py collectstatic`, `DJANGO_DEBUG=0`, real `DJANGO_SECRET_KEY`, PostgreSQL via `POSTGRES_*`).
-Serve `backend/media/` with your web server or object storage in production.
-
-## AI (OpenRouter)
-
-Set `OPENROUTER_API_KEY` and `OPENROUTER_MODEL` in `backend/.env`. Choose a model on https://openrouter.ai/models
-that supports **tools** and **structured outputs**. Without a key the site works normally; AI features return
-"AI is not configured". Every AI call from users is rate-limited (`AI_RATE`, default 30/hour per user or IP).
-
 | Feature                                     | Where                                                            | Who decides                                                                                         |
 | ------------------------------------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | Course advisor chat                         | Chat button on every page, `POST /api/chat/`                     | AI suggests courses using live DB data (tools). Prices, enrollment and payment stay with the system |
@@ -60,8 +49,3 @@ Retrieval is keyword-based over lesson paragraphs; switch to embeddings + pgvect
 | POST      | `/api/auth/logout/` · GET `/api/auth/me/`                                     | Need `Authorization: Token <token>`                                                                           |
 | GET, POST | `/api/orders/`                                                                | My orders; POST `{"courses": [ids]}` creates a pending order with price snapshot                              |
 | POST      | `/api/orders/<id>/pay/`                                                       | **Mock payment, only when `DJANGO_DEBUG=1`.** Replace with a real gateway (VNPay, MoMo, Stripe) before launch |
-
-## Seed data
-
-`database/seed.json` is sample data for development. Seed users have no usable password. Replace the sample
-comments, lessons and article texts with real content before launch.
